@@ -1,0 +1,15 @@
+apiVersion: vendir.k14s.io/v1alpha1
+directories:
+- contents:
+  - git:
+      commitTitle: 'doc: cut v4.9.0 release'
+      sha: 975dac0ca8b4675cf48286364033d7c66ba309bb
+      tags:
+      - v4.9.0
+    path: csi-driver-nfs
+  path: vendor
+- contents:
+  - directory: {}
+    path: .
+  path: helm/csi-driver-nfs/templates
+kind: LockConfig

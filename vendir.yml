@@ -1,0 +1,18 @@
+apiVersion: vendir.k14s.io/v1alpha1
+kind: Config
+directories:
+  - path: vendor
+    contents:
+      - path: csi-driver-nfs
+        git:
+          depth: 1
+          url: https://github.com/kubernetes-csi/csi-driver-nfs
+          ref: "v4.9.0"
+        includePaths:
+          - charts/latest/**/*
+  - path: helm/csi-driver-nfs/templates
+    contents:
+    - path: .
+      directory:
+        path: vendor/csi-driver-nfs/charts/latest/csi-driver-nfs/templates
+
