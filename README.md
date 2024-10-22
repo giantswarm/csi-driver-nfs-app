@@ -1,17 +1,18 @@
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/giantswarm/csi-driver-nfs/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/giantswarm/csi-driver-nfs/tree/main)
 
-[Read me after cloning this template (GS staff only)](https://handbook.giantswarm.io/docs/dev-and-releng/app-developer-processes/adding_app_to_appcatalog/)
-
 # csi-driver-nfs chart
 
-Giant Swarm offers a csi-driver-nfs App which can be installed in workload clusters.
-Here we define the csi-driver-nfs chart with its templates and default configuration.
+Giant Swarm offers a csi-driver-nfs App which can be installed in kubernetes clusters.
+This app packages the helm chart for [csi-driver-nfs](https://github.com/kubernetes-csi/csi-driver-nfs) for use in the Giant Swarm App Platform.
 
 **What is this app?**
 
-**Why did we add it?**
+This is a repository for NFS CSI driver, csi plugin name: nfs.csi.k8s.io.
+It supports dynamic provisioning of Persistent Volumes via Persistent Volume Claims by creating a new sub directory under NFS server.
 
 **Who can use it?**
+
+This driver requires existing and already configured NFSv3 or NFSv4 server.
 
 ## Installing
 
@@ -28,43 +29,21 @@ There are several ways to install this app onto a workload cluster.
 **This is an example of a values file you could upload using our web interface.**
 
 ```yaml
-# values.yaml
-
+storageClass:
+  create: false
+  name: nfs-csi
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
+  parameters:
+    server: nfs-server.default.svc.cluster.local
+    share: /
+    subDir:
+    mountPermissions: "0"
+#     csi.storage.k8s.io/provisioner-secret is only needed for providing mountOptions in DeleteVolume
+    csi.storage.k8s.io/provisioner-secret-name: "mount-options"
+    csi.storage.k8s.io/provisioner-secret-namespace: "default"
+  reclaimPolicy: Delete
+  volumeBindingMode: Immediate
+  mountOptions:
+    - nfsvers=4.1
 ```
-
-### Sample App CR and ConfigMap for the management cluster
-
-If you have access to the Kubernetes API on the management cluster, you could create
-the App CR and ConfigMap directly.
-
-Here is an example that would install the app to
-workload cluster `abc12`:
-
-```yaml
-# appCR.yaml
-
-```
-
-```yaml
-# user-values-configmap.yaml
-
-```
-
-See our [full reference on how to configure apps](https://docs.giantswarm.io/getting-started/app-platform/app-configuration/) for more details.
-
-## Compatibility
-
-This app has been tested to work with the following workload cluster release versions:
-
-- _add release version_
-
-## Limitations
-
-Some apps have restrictions on how they can be deployed.
-Not following these limitations will most likely result in a broken deployment.
-
-- _add limitation_
-
-## Credit
-
-- {APP HELM REPOSITORY}
