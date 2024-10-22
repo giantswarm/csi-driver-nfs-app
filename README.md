@@ -12,7 +12,7 @@ It supports dynamic provisioning of Persistent Volumes via Persistent Volume Cla
 
 **Who can use it?**
 
-This driver requires existing and already configured NFSv3 or NFSv4 server.
+This driver requires an existing and already configured NFSv3 or NFSv4 server.
 
 ## Installing
 
