@@ -1,4 +1,4 @@
-name: {APP-NAME}
+name: csi-driver-nfs
 serviceType: managed
 
 project:
@@ -6,7 +6,7 @@ project:
   commit: "[[ .SHA ]]"
 
 image:
-  registry: quay.io
-  name: giantswarm/{APP-NAME}
-  tag: v0.0.1
+  registry: gsoci.azurecr.io
+  name: giantswarm/csi-driver-nfs
+  tag: v4.9.0
   pullPolicy: IfNotPresent
