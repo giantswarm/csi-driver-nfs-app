@@ -2,4 +2,4 @@ replace-chart-version-with-git: true
 generate-metadata: true
 chart-dir: ./helm/csi-driver-nfs
 destination: ./build
-disable-giantswarm-helm-validator: true
+skip-steps: ["validate", "static_check"]
