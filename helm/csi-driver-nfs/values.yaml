@@ -5,7 +5,9 @@ project:
   branch: "[[ .Branch ]]"
   commit: "[[ .SHA ]]"
 
-customLabels: {}
+customLabels:
+  giantswarm.io/service-type: managed
+  application.giantswarm.io/team: rocket
 image:
     baseRepo: gsoci.azurecr.io
     nfs:
