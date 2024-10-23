@@ -11,5 +11,5 @@ directories:
 - contents:
   - directory: {}
     path: .
-  path: helm/csi-driver-nfs/templates
+  path: helm
 kind: LockConfig
