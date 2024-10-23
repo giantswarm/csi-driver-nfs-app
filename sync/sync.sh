@@ -14,8 +14,9 @@ helm dependency update helm/csi-driver-nfs/
 { set +x; } 2>/dev/null
 
 # Patches
-# ./sync/patches/values/patch.sh
-# ./sync/patches/chart/patch.sh
+./sync/patches/values/patch.sh
+./sync/patches/chart/patch.sh
+./sync/patches/csi-nfs-node/patch.sh
 
 # Store diffs
 rm -f ./diffs/*
