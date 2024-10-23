@@ -5,7 +5,7 @@ name: csi-driver-nfs
 
 description: Giant Swarm offered CSI Driver NFS App which can be installed in workload clusters
 
-home: https://github.com/giantswarm/csi-driver-nfs
+home: https://github.com/giantswarm/csi-driver-nfs-app
 
 # If you have an icon/logo, you should add it to https://github.com/giantswarm/web-assets
 # and set the final URL as a value here and uncomment.
