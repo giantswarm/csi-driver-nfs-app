@@ -10,9 +10,9 @@ directories:
           ref: "v4.9.0"
         includePaths:
           - charts/latest/**/*
-  - path: helm/csi-driver-nfs/templates
+  - path: helm
     contents:
     - path: .
       directory:
-        path: vendor/csi-driver-nfs/charts/latest/csi-driver-nfs/templates
+        path: vendor/csi-driver-nfs/charts/latest
 
