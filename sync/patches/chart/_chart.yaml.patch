@@ -1,29 +1,18 @@
-diff --git b/helm/csi-driver-nfs/Chart.yaml a/helm/csi-driver-nfs/Chart.yaml
-old mode 100755
-new mode 100644
-index 9b70d4c..b0b1625
---- b/helm/csi-driver-nfs/Chart.yaml
-+++ a/helm/csi-driver-nfs/Chart.yaml
-@@ -1,5 +1,18 @@
+diff --git a/helm/csi-driver-nfs/Chart.yaml b/helm/csi-driver-nfs/Chart.yaml
+index 9b70d4c..9fb8256 100755
+--- a/helm/csi-driver-nfs/Chart.yaml
++++ b/helm/csi-driver-nfs/Chart.yaml
+@@ -1,5 +1,11 @@
 -apiVersion: v1
--appVersion: v4.9.0
--description: CSI NFS Driver for Kubernetes
 +apiVersion: v2
-+appVersion: 4.9.0
-+
+ appVersion: v4.9.0
+ description: CSI NFS Driver for Kubernetes
  name: csi-driver-nfs
 -version: v4.9.0
++version: 0.0.0-dev
 +
-+description: Giant Swarm offered CSI Driver NFS App which can be installed in workload clusters
-+
-+home: https://github.com/giantswarm/csi-driver-nfs
-+
-+# If you have an icon/logo, you should add it to https://github.com/giantswarm/web-assets
-+# and set the final URL as a value here and uncomment.
-+# icon: https://s.giantswarm.io/app-icons/example/1/light.svg
-+
++home: https://github.com/giantswarm/csi-driver-nfs-app
 +sources:
 +- https://github.com/kubernetes-csi/csi-driver-nfs
-+version: 0.0.0-dev # [[ .Version ]] if you're using architect instead of app-build-suite
 +annotations:
 +  application.giantswarm.io/team: rocket
