@@ -1,4 +1,4 @@
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/giantswarm/csi-driver-nfs/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/giantswarm/csi-driver-nfs/tree/main)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/giantswarm/csi-driver-nfs-app/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/giantswarm/csi-driver-nfs-app/tree/main)
 
 # csi-driver-nfs chart
 
