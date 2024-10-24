@@ -1,8 +1,8 @@
 diff --git a/helm/csi-driver-nfs/Chart.yaml b/helm/csi-driver-nfs/Chart.yaml
-index 9b70d4c..9fb8256 100755
+index 9b70d4c..3c038e5 100755
 --- a/helm/csi-driver-nfs/Chart.yaml
 +++ b/helm/csi-driver-nfs/Chart.yaml
-@@ -1,5 +1,11 @@
+@@ -1,5 +1,12 @@
 -apiVersion: v1
 +apiVersion: v2
  appVersion: v4.9.0
@@ -11,6 +11,7 @@ index 9b70d4c..9fb8256 100755
 -version: v4.9.0
 +version: 0.0.0-dev
 +
++icon: https://s.giantswarm.io/app-icons/csi/1/light.svg
 +home: https://github.com/giantswarm/csi-driver-nfs-app
 +sources:
 +- https://github.com/kubernetes-csi/csi-driver-nfs

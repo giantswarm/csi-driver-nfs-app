@@ -1,0 +1,13 @@
+diff --git a/helm/csi-driver-nfs/templates/_helpers.tpl b/helm/csi-driver-nfs/templates/_helpers.tpl
+index 901a53f..fe88ea4 100644
+--- a/helm/csi-driver-nfs/templates/_helpers.tpl
++++ b/helm/csi-driver-nfs/templates/_helpers.tpl
+@@ -13,6 +13,8 @@ labels:
+   app.kubernetes.io/name: "{{ template "nfs.name" . }}"
+   app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
+   helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
++  giantswarm.io/service-type: managed
++  application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantswarm.io/team" | quote }}
+   {{- if .Values.customLabels }}
+ {{ toYaml .Values.customLabels | indent 2 -}}
+   {{- end }}

@@ -61,7 +61,7 @@ spec:
           resources: {{- toYaml .Values.node.resources.livenessProbe | nindent 12 }}
           securityContext:
             readOnlyRootFilesystem: true
-            runAsNonRoot: true
+            runAsUser: 1000
             capabilities:
               drop:
               - ALL
@@ -99,13 +99,14 @@ spec:
           resources: {{- toYaml .Values.node.resources.nodeDriverRegistrar | nindent 12 }}
           securityContext:
             readOnlyRootFilesystem: true
+            runAsUser: 1000
             capabilities:
               drop:
               - ALL
         - name: nfs
           securityContext:
             readOnlyRootFilesystem: true
-            runAsNonRoot: true
+            runAsUser: 1000
             privileged: false
             capabilities:
               drop:
