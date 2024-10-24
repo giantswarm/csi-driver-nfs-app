@@ -21,7 +21,7 @@ spec:
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
       {{- end }}
-      hostNetwork: false  # controller also needs to mount nfs to create dir
+      hostNetwork: true  # controller also needs to mount nfs to create dir
       dnsPolicy: {{ .Values.controller.dnsPolicy }}
       serviceAccountName: {{ .Values.serviceAccount.controller }}
 {{- with .Values.controller.affinity }}
@@ -72,7 +72,6 @@ spec:
           resources: {{- toYaml .Values.controller.resources.csiProvisioner | nindent 12 }}
           securityContext:
             readOnlyRootFilesystem: true
-            runAsUser: 1000
             capabilities:
               drop:
               - ALL
@@ -97,8 +96,6 @@ spec:
             - name: socket-dir
               mountPath: /csi
           securityContext:
-            readOnlyRootFilesystem: true
-            runAsUser: 1000
             capabilities:
               drop:
               - ALL
@@ -120,7 +117,6 @@ spec:
           resources: {{- toYaml .Values.controller.resources.livenessProbe | nindent 12 }}
           securityContext:
             readOnlyRootFilesystem: true
-            runAsUser: 1000
             capabilities:
               drop:
               - ALL
@@ -131,14 +127,12 @@ spec:
           image: "{{ .Values.image.nfs.repository }}:{{ .Values.image.nfs.tag }}"
 {{- end }}
           securityContext:
-            privileged: false
-            readOnlyRootFilesystem: true
-            runAsUser: 1000
+            privileged: true
             capabilities:
               add: ["SYS_ADMIN"]
               drop:
               - ALL
-            allowPrivilegeEscalation: false
+            allowPrivilegeEscalation: true
           imagePullPolicy: {{ .Values.image.nfs.pullPolicy }}
           args:
             - "--v={{ .Values.controller.logLevel }}"

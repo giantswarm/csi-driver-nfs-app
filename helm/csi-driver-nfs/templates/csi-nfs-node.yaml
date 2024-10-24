@@ -22,7 +22,7 @@ spec:
       imagePullSecrets:
 {{ toYaml .Values.imagePullSecrets | indent 8 }}
       {{- end }}
-      hostNetwork: false # original nfs connection would be broken without hostNetwork setting
+      hostNetwork: true # original nfs connection would be broken without hostNetwork setting
       dnsPolicy: {{ .Values.controller.dnsPolicy }}
       serviceAccountName: {{ .Values.serviceAccount.node }}
       priorityClassName: {{ .Values.node.priorityClassName }}
@@ -61,7 +61,6 @@ spec:
           resources: {{- toYaml .Values.node.resources.livenessProbe | nindent 12 }}
           securityContext:
             readOnlyRootFilesystem: true
-            runAsUser: 1000
             capabilities:
               drop:
               - ALL
@@ -98,19 +97,17 @@ spec:
               mountPath: /registration
           resources: {{- toYaml .Values.node.resources.nodeDriverRegistrar | nindent 12 }}
           securityContext:
-            readOnlyRootFilesystem: true
             capabilities:
               drop:
               - ALL
         - name: nfs
           securityContext:
-            readOnlyRootFilesystem: true
-            runAsUser: 1000
-            privileged: false
+            privileged: true
             capabilities:
+              add: ["SYS_ADMIN"]
               drop:
               - ALL
-            allowPrivilegeEscalation: false
+            allowPrivilegeEscalation: true
 {{- if hasPrefix "/" .Values.image.nfs.repository }}
           image: "{{ .Values.image.baseRepo }}{{ .Values.image.nfs.repository }}:{{ .Values.image.nfs.tag }}"
 {{- else }}
