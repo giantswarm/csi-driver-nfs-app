@@ -45,7 +45,7 @@ index 82332a0..a8c6bb7 100644
 +            readOnlyRootFilesystem: true
 +            runAsUser: 1000
              capabilities:
--              add: ["SYS_ADMIN"]
+               add: ["SYS_ADMIN"]
                drop:
                - ALL
 -            allowPrivilegeEscalation: true
