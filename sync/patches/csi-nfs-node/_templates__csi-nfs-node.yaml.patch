@@ -1,0 +1,44 @@
+diff --git a/helm/csi-driver-nfs/templates/csi-nfs-node.yaml b/helm/csi-driver-nfs/templates/csi-nfs-node.yaml
+index 60bf8d6..e6261d1 100644
+--- a/helm/csi-driver-nfs/templates/csi-nfs-node.yaml
++++ b/helm/csi-driver-nfs/templates/csi-nfs-node.yaml
+@@ -22,7 +22,7 @@ spec:
+       imagePullSecrets:
+ {{ toYaml .Values.imagePullSecrets | indent 8 }}
+       {{- end }}
+-      hostNetwork: true # original nfs connection would be broken without hostNetwork setting
++      hostNetwork: false # original nfs connection would be broken without hostNetwork setting
+       dnsPolicy: {{ .Values.controller.dnsPolicy }}
+       serviceAccountName: {{ .Values.serviceAccount.node }}
+       priorityClassName: {{ .Values.node.priorityClassName }}
+@@ -61,6 +61,7 @@ spec:
+           resources: {{- toYaml .Values.node.resources.livenessProbe | nindent 12 }}
+           securityContext:
+             readOnlyRootFilesystem: true
++            runAsNonRoot: true
+             capabilities:
+               drop:
+               - ALL
+@@ -97,17 +98,19 @@ spec:
+               mountPath: /registration
+           resources: {{- toYaml .Values.node.resources.nodeDriverRegistrar | nindent 12 }}
+           securityContext:
++            readOnlyRootFilesystem: true
+             capabilities:
+               drop:
+               - ALL
+         - name: nfs
+           securityContext:
+-            privileged: true
++            readOnlyRootFilesystem: true
++            runAsNonRoot: true
++            privileged: false
+             capabilities:
+-              add: ["SYS_ADMIN"]
+               drop:
+               - ALL
+-            allowPrivilegeEscalation: true
++            allowPrivilegeEscalation: false
+ {{- if hasPrefix "/" .Values.image.nfs.repository }}
+           image: "{{ .Values.image.baseRepo }}{{ .Values.image.nfs.repository }}:{{ .Values.image.nfs.tag }}"
+ {{- else }}
