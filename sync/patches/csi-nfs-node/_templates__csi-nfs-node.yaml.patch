@@ -24,6 +24,7 @@ index 60bf8d6..e6261d1 100644
            resources: {{- toYaml .Values.node.resources.nodeDriverRegistrar | nindent 12 }}
            securityContext:
 +            readOnlyRootFilesystem: true
++            runAsUser: 1000
              capabilities:
                drop:
                - ALL
