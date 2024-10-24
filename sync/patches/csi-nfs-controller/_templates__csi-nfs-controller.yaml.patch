@@ -1,5 +1,5 @@
 diff --git a/helm/csi-driver-nfs/templates/csi-nfs-controller.yaml b/helm/csi-driver-nfs/templates/csi-nfs-controller.yaml
-index 82332a0..a8c6bb7 100644
+index 82332a0..6394d60 100644
 --- a/helm/csi-driver-nfs/templates/csi-nfs-controller.yaml
 +++ b/helm/csi-driver-nfs/templates/csi-nfs-controller.yaml
 @@ -21,7 +21,7 @@ spec:
@@ -36,7 +36,7 @@ index 82332a0..a8c6bb7 100644
              capabilities:
                drop:
                - ALL
-@@ -127,12 +131,14 @@ spec:
+@@ -127,12 +131,13 @@ spec:
            image: "{{ .Values.image.nfs.repository }}:{{ .Values.image.nfs.tag }}"
  {{- end }}
            securityContext:
@@ -45,7 +45,7 @@ index 82332a0..a8c6bb7 100644
 +            readOnlyRootFilesystem: true
 +            runAsUser: 1000
              capabilities:
-               add: ["SYS_ADMIN"]
+-              add: ["SYS_ADMIN"]
                drop:
                - ALL
 -            allowPrivilegeEscalation: true

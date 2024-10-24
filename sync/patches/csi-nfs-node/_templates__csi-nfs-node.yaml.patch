@@ -1,5 +1,5 @@
 diff --git a/helm/csi-driver-nfs/templates/csi-nfs-node.yaml b/helm/csi-driver-nfs/templates/csi-nfs-node.yaml
-index 60bf8d6..e6261d1 100644
+index 60bf8d6..0bca30a 100644
 --- a/helm/csi-driver-nfs/templates/csi-nfs-node.yaml
 +++ b/helm/csi-driver-nfs/templates/csi-nfs-node.yaml
 @@ -22,7 +22,7 @@ spec:
@@ -19,11 +19,12 @@ index 60bf8d6..e6261d1 100644
              capabilities:
                drop:
                - ALL
-@@ -97,17 +98,19 @@ spec:
+@@ -97,17 +98,20 @@ spec:
                mountPath: /registration
            resources: {{- toYaml .Values.node.resources.nodeDriverRegistrar | nindent 12 }}
            securityContext:
 +            readOnlyRootFilesystem: true
++            runAsUser: 1000
              capabilities:
                drop:
                - ALL

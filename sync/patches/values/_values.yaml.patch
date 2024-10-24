@@ -1,5 +1,5 @@
 diff --git a/helm/csi-driver-nfs/values.yaml b/helm/csi-driver-nfs/values.yaml
-index f7d85f9..12d13ba 100755
+index f7d85f9..c022f05 100755
 --- a/helm/csi-driver-nfs/values.yaml
 +++ b/helm/csi-driver-nfs/values.yaml
 @@ -1,35 +1,35 @@
@@ -66,7 +66,36 @@ index f7d85f9..12d13ba 100755
  
  rbac:
    create: true
-@@ -112,18 +112,21 @@ node:
+@@ -74,24 +74,28 @@ controller:
+   resources:
+     csiProvisioner:
+       limits:
++        cpu: 100m
+         memory: 400Mi
+       requests:
+         cpu: 10m
+         memory: 20Mi
+     csiSnapshotter:
+       limits:
++        cpu: 100m
+         memory: 200Mi
+       requests:
+         cpu: 10m
+         memory: 20Mi
+     livenessProbe:
+       limits:
++        cpu: 100m
+         memory: 100Mi
+       requests:
+         cpu: 10m
+         memory: 20Mi
+     nfs:
+       limits:
++        cpu: 100m
+         memory: 200Mi
+       requests:
+         cpu: 10m
+@@ -112,18 +116,21 @@ node:
    resources:
      livenessProbe:
        limits:
@@ -88,7 +117,7 @@ index f7d85f9..12d13ba 100755
          memory: 300Mi
        requests:
          cpu: 10m
-@@ -143,7 +146,7 @@ externalSnapshotter:
+@@ -143,7 +150,7 @@ externalSnapshotter:
        memory: 20Mi
    # Create volume snapshot CRDs.
    customResourceDefinitions:
@@ -97,7 +126,7 @@ index f7d85f9..12d13ba 100755
  
  ## Reference to one or more secrets to be used when pulling images
  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-@@ -169,3 +172,10 @@ storageClass:
+@@ -169,3 +176,10 @@ storageClass:
  #   volumeBindingMode: Immediate
  #   mountOptions:
  #     - nfsvers=4.1
