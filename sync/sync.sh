@@ -17,8 +17,6 @@ helm dependency update helm/csi-driver-nfs/
 ./sync/patches/values/patch.sh
 ./sync/patches/chart/patch.sh
 ./sync/patches/helpers/patch.sh
-./sync/patches/csi-nfs-node/patch.sh
-./sync/patches/csi-nfs-controller/patch.sh
 
 # generate schema
 set -x
