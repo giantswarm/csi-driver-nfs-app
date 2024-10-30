@@ -2,7 +2,7 @@ apiVersion: policy.giantswarm.io/v1alpha1
 kind: PolicyException
 metadata:
   name: {{ .Values.node.name }}
-  namespace: {{ .Release.Namespace }}
+  namespace: policy-exceptions
 {{ include "nfs.labels" . | indent 2 }}
 spec:
   policies:
@@ -25,7 +25,7 @@ apiVersion: policy.giantswarm.io/v1alpha1
 kind: PolicyException
 metadata:
   name: {{ .Values.controller.name }}
-  namespace: {{ .Release.Namespace }}
+  namespace: policy-exceptions
 {{ include "nfs.labels" . | indent 2 }}
 spec:
   policies:
