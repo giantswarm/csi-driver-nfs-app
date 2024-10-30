@@ -7,8 +7,13 @@ metadata:
 spec:
   policies:
     - disallow-capabilities
+    - disallow-capabilities-strict
     - disallow-host-namespaces
+    - disallow-host-path
+    - disallow-privilege-escalation
     - disallow-privileged-containers
+    - require-run-as-nonroot
+    - restrict-volume-types
   targets:
     - kind: DaemonSet
       namespaces:
@@ -25,8 +30,13 @@ metadata:
 spec:
   policies:
     - disallow-capabilities
+    - disallow-capabilities-strict
     - disallow-host-namespaces
+    - disallow-host-path
+    - disallow-privilege-escalation
     - disallow-privileged-containers
+    - require-run-as-nonroot
+    - restrict-volume-types
   targets:
     - kind: Deployment
       namespaces:
