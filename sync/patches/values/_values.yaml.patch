@@ -33,7 +33,7 @@ index f7d85f9..c022f05 100755
 +  baseRepo: gsoci.azurecr.io
 +  nfs:
 +    repository: /giantswarm/nfsplugin
-+    tag: canary
++    tag: v4.9.0
 +    pullPolicy: IfNotPresent
 +  csiProvisioner:
 +    repository: /giantswarm/csi-provisioner
