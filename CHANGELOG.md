@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2024-11-05
+
+### Added
+
+- Initial release of upstream version `4.9.0`
+
+## [0.1.0] - 2024-11-05
+
 - changed: `app.giantswarm.io` label group was changed to `application.giantswarm.io`
 
-[Unreleased]: https://github.com/giantswarm/csi-driver-nfs-app/tree/main
+[Unreleased]: https://github.com/giantswarm/csi-driver-nfs-app/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/giantswarm/csi-driver-nfs-app/compare/v0.1.0...v1.0.0
+[0.1.0]: https://github.com/giantswarm/csi-driver-nfs-app/releases/tag/v0.1.0
