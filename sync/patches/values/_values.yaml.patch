@@ -9,37 +9,37 @@ index 17b0f4f..c27bee4 100755
 +    baseRepo: gsoci.azurecr.io
      nfs:
 -        repository: registry.k8s.io/sig-storage/nfsplugin
-+        repository: /giantswarm/sig-storage/nfsplugin
++        repository: /giantswarm/nfsplugin
          tag: v4.11.0
          pullPolicy: IfNotPresent
      csiProvisioner:
 -        repository: registry.k8s.io/sig-storage/csi-provisioner
-+        repository: /giantswarm/sig-storage/csi-provisioner
++        repository: /giantswarm/csi-provisioner
          tag: v5.2.0
          pullPolicy: IfNotPresent
      csiResizer:
 -        repository: registry.k8s.io/sig-storage/csi-resizer
-+        repository: /giantswarm/sig-storage/csi-resizer
++        repository: /giantswarm/csi-resizer
          tag: v1.13.1
          pullPolicy: IfNotPresent
      csiSnapshotter:
 -        repository: registry.k8s.io/sig-storage/csi-snapshotter
-+        repository: /giantswarm/sig-storage/csi-snapshotter
++        repository: /giantswarm/csi-snapshotter
          tag: v8.2.0
          pullPolicy: IfNotPresent
      livenessProbe:
 -        repository: registry.k8s.io/sig-storage/livenessprobe
-+        repository: /giantswarm/sig-storage/livenessprobe
++        repository: /giantswarm/livenessprobe
          tag: v2.15.0
          pullPolicy: IfNotPresent
      nodeDriverRegistrar:
 -        repository: registry.k8s.io/sig-storage/csi-node-driver-registrar
-+        repository: /giantswarm/sig-storage/csi-node-driver-registrar
++        repository: /giantswarm/csi-node-driver-registrar
          tag: v2.13.0
          pullPolicy: IfNotPresent
      externalSnapshotter:
 -        repository: registry.k8s.io/sig-storage/snapshot-controller
-+        repository: /giantswarm/sig-storage/snapshot-controller
++        repository: /giantswarm/snapshot-controller
          tag: v8.2.0
          pullPolicy: IfNotPresent
  
