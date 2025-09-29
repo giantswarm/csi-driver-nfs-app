@@ -1,60 +1,47 @@
 diff --git a/helm/csi-driver-nfs/values.yaml b/helm/csi-driver-nfs/values.yaml
-index f7d85f9..c022f05 100755
+index 17b0f4f..c27bee4 100755
 --- a/helm/csi-driver-nfs/values.yaml
 +++ b/helm/csi-driver-nfs/values.yaml
-@@ -1,35 +1,35 @@
+@@ -1,39 +1,39 @@
  customLabels: {}
  image:
 -    baseRepo: registry.k8s.io
--    nfs:
++    baseRepo: gsoci.azurecr.io
+     nfs:
 -        repository: registry.k8s.io/sig-storage/nfsplugin
--        tag: v4.9.0
--        pullPolicy: IfNotPresent
--    csiProvisioner:
++        repository: /giantswarm/nfsplugin
+         tag: v4.11.0
+         pullPolicy: IfNotPresent
+     csiProvisioner:
 -        repository: registry.k8s.io/sig-storage/csi-provisioner
--        tag: v5.0.2
--        pullPolicy: IfNotPresent
--    csiSnapshotter:
++        repository: /giantswarm/csi-provisioner
+         tag: v5.2.0
+         pullPolicy: IfNotPresent
+     csiResizer:
+-        repository: registry.k8s.io/sig-storage/csi-resizer
++        repository: /giantswarm/csi-resizer
+         tag: v1.13.1
+         pullPolicy: IfNotPresent
+     csiSnapshotter:
 -        repository: registry.k8s.io/sig-storage/csi-snapshotter
--        tag: v8.0.1
--        pullPolicy: IfNotPresent
--    livenessProbe:
++        repository: /giantswarm/csi-snapshotter
+         tag: v8.2.0
+         pullPolicy: IfNotPresent
+     livenessProbe:
 -        repository: registry.k8s.io/sig-storage/livenessprobe
--        tag: v2.13.1
--        pullPolicy: IfNotPresent
--    nodeDriverRegistrar:
++        repository: /giantswarm/livenessprobe
+         tag: v2.15.0
+         pullPolicy: IfNotPresent
+     nodeDriverRegistrar:
 -        repository: registry.k8s.io/sig-storage/csi-node-driver-registrar
--        tag: v2.11.1
--        pullPolicy: IfNotPresent
--    externalSnapshotter:
++        repository: /giantswarm/csi-node-driver-registrar
+         tag: v2.13.0
+         pullPolicy: IfNotPresent
+     externalSnapshotter:
 -        repository: registry.k8s.io/sig-storage/snapshot-controller
--        tag: v8.0.1
--        pullPolicy: IfNotPresent
-+  baseRepo: gsoci.azurecr.io
-+  nfs:
-+    repository: /giantswarm/nfsplugin
-+    tag: v4.9.0
-+    pullPolicy: IfNotPresent
-+  csiProvisioner:
-+    repository: /giantswarm/csi-provisioner
-+    tag: v5.0.2
-+    pullPolicy: IfNotPresent
-+  csiSnapshotter:
-+    repository: /giantswarm/csi-snapshotter
-+    tag: v8.0.1
-+    pullPolicy: IfNotPresent
-+  livenessProbe:
-+    repository: /giantswarm/livenessprobe
-+    tag: v2.13.1
-+    pullPolicy: IfNotPresent
-+  nodeDriverRegistrar:
-+    repository: /giantswarm/csi-node-driver-registrar
-+    tag: v2.11.1
-+    pullPolicy: IfNotPresent
-+  externalSnapshotter:
-+    repository: /giantswarm/sig-storage/snapshot-controller
-+    tag: v8.0.1
-+    pullPolicy: IfNotPresent
++        repository: /giantswarm/snapshot-controller
+         tag: v8.2.0
+         pullPolicy: IfNotPresent
  
  serviceAccount:
 -  create: true # When true, service accounts will be created for you. Set to false if you want to use your own.
@@ -66,9 +53,16 @@ index f7d85f9..c022f05 100755
  
  rbac:
    create: true
-@@ -74,24 +74,28 @@ controller:
+@@ -83,30 +83,35 @@ controller:
    resources:
      csiProvisioner:
+       limits:
++        cpu: 100m
+         memory: 400Mi
+       requests:
+         cpu: 10m
+         memory: 20Mi
+     csiResizer:
        limits:
 +        cpu: 100m
          memory: 400Mi
@@ -95,7 +89,7 @@ index f7d85f9..c022f05 100755
          memory: 200Mi
        requests:
          cpu: 10m
-@@ -112,18 +116,21 @@ node:
+@@ -127,18 +132,21 @@ node:
    resources:
      livenessProbe:
        limits:
@@ -117,16 +111,16 @@ index f7d85f9..c022f05 100755
          memory: 300Mi
        requests:
          cpu: 10m
-@@ -143,7 +150,7 @@ externalSnapshotter:
+@@ -159,7 +167,7 @@ externalSnapshotter:
        memory: 20Mi
    # Create volume snapshot CRDs.
    customResourceDefinitions:
 -    enabled: true   #if set true, VolumeSnapshot, VolumeSnapshotContent and VolumeSnapshotClass CRDs will be created. Set it false, If they already exist in cluster.
 +    enabled: true   # if set true, VolumeSnapshot, VolumeSnapshotContent and VolumeSnapshotClass CRDs will be created. Set it false, If they already exist in cluster.
  
- ## Reference to one or more secrets to be used when pulling images
- ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-@@ -169,3 +176,10 @@ storageClass:
+ ## volumeSnapshotClass resource example:
+ volumeSnapshotClass:
+@@ -191,3 +199,10 @@ storageClass:
  #   volumeBindingMode: Immediate
  #   mountOptions:
  #     - nfsvers=4.1
