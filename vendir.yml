@@ -7,7 +7,7 @@ directories:
         git:
           depth: 1
           url: https://github.com/kubernetes-csi/csi-driver-nfs
-          ref: "v4.9.0"
+          ref: "v4.11.0"
         includePaths:
           - charts/latest/**/*
   - path: helm

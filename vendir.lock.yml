@@ -2,10 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'doc: cut v4.9.0 release'
-      sha: 975dac0ca8b4675cf48286364033d7c66ba309bb
+      commitTitle: 'doc: cut v4.11.0 release...'
+      sha: ef33802ec217f8c03224b3d3b93f126834745380
       tags:
-      - v4.9.0
+      - v4.11.0
     path: csi-driver-nfs
   path: vendor
 - contents:

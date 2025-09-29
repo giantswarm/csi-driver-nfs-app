@@ -14,6 +14,9 @@
                 "dnsPolicy": {
                     "type": "string"
                 },
+                "enableSnapshotter": {
+                    "type": "boolean"
+                },
                 "livenessProbe": {
                     "type": "object",
                     "properties": {
@@ -41,6 +44,33 @@
                     "type": "object",
                     "properties": {
                         "csiProvisioner": {
+                            "type": "object",
+                            "properties": {
+                                "limits": {
+                                    "type": "object",
+                                    "properties": {
+                                        "cpu": {
+                                            "type": "string"
+                                        },
+                                        "memory": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "requests": {
+                                    "type": "object",
+                                    "properties": {
+                                        "cpu": {
+                                            "type": "string"
+                                        },
+                                        "memory": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "csiResizer": {
                             "type": "object",
                             "properties": {
                                 "limits": {
@@ -176,6 +206,9 @@
                         }
                     }
                 },
+                "useTarCommandInSnapshot": {
+                    "type": "boolean"
+                },
                 "workingMountDir": {
                     "type": "string"
                 }
@@ -213,6 +246,9 @@
                             "type": "boolean"
                         }
                     }
+                },
+                "deletionPolicy": {
+                    "type": "string"
                 },
                 "enabled": {
                     "type": "boolean"
@@ -270,6 +306,20 @@
                     "type": "string"
                 },
                 "csiProvisioner": {
+                    "type": "object",
+                    "properties": {
+                        "pullPolicy": {
+                            "type": "string"
+                        },
+                        "repository": {
+                            "type": "string"
+                        },
+                        "tag": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "csiResizer": {
                     "type": "object",
                     "properties": {
                         "pullPolicy": {
@@ -539,6 +589,20 @@
             "properties": {
                 "create": {
                     "type": "boolean"
+                }
+            }
+        },
+        "volumeSnapshotClass": {
+            "type": "object",
+            "properties": {
+                "create": {
+                    "type": "boolean"
+                },
+                "deletionPolicy": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
                 }
             }
         }
