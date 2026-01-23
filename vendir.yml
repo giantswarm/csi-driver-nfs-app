@@ -10,6 +10,8 @@ directories:
           ref: "v4.11.0"
         includePaths:
           - charts/latest/**/*
+        excludePaths:
+          - charts/latest/*.tgz
   - path: helm
     contents:
     - path: .
