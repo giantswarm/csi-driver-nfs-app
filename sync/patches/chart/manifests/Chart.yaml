@@ -1,8 +1,8 @@
 apiVersion: v2
-appVersion: 4.11.0
+appVersion: UPSTREAM_CHART_VERSION
 description: CSI NFS Driver for Kubernetes
 name: csi-driver-nfs
-version: 1.1.1
+version: CURRENT_CHART_VERSION
 icon: https://s.giantswarm.io/app-icons/csi/1/light.svg
 home: https://github.com/giantswarm/csi-driver-nfs-app
 sources:
@@ -12,4 +12,4 @@ annotations:
   io.giantswarm.application.managed: "true"
   io.giantswarm.application.team: "rocket"
   io.giantswarm.application.upstream-chart-url: "https://github.com/kubernetes-csi/csi-driver-nfs"
-  io.giantswarm.application.upstream-chart-version: "4.11.0"
+  io.giantswarm.application.upstream-chart-version: "UPSTREAM_CHART_VERSION"
