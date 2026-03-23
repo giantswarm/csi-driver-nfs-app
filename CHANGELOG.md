@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-03-23
+
 ### Changed
 
 - Update to upstream `v4.13.1` to mitigate CVE-2026-3864.
@@ -39,7 +41,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - changed: `app.giantswarm.io` label group was changed to `application.giantswarm.io`
 
-[Unreleased]: https://github.com/giantswarm/csi-driver-nfs-app/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/giantswarm/csi-driver-nfs-app/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/giantswarm/csi-driver-nfs-app/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/giantswarm/csi-driver-nfs-app/compare/v1.1.1...v1.2.0
 [1.1.1]: https://github.com/giantswarm/csi-driver-nfs-app/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/giantswarm/csi-driver-nfs-app/compare/v1.0.0...v1.1.0
