@@ -1,5 +1,5 @@
 diff --git a/helm/csi-driver-nfs/values.yaml b/helm/csi-driver-nfs/values.yaml
-index 17b0f4f..c27bee4 100755
+index 5378e0a..3dc32fb 100755
 --- a/helm/csi-driver-nfs/values.yaml
 +++ b/helm/csi-driver-nfs/values.yaml
 @@ -1,39 +1,39 @@
@@ -10,37 +10,37 @@ index 17b0f4f..c27bee4 100755
      nfs:
 -        repository: registry.k8s.io/sig-storage/nfsplugin
 +        repository: /giantswarm/nfsplugin
-         tag: v4.11.0
+         tag: v4.13.1
          pullPolicy: IfNotPresent
      csiProvisioner:
--        repository: registry.k8s.io/sig-storage/csi-provisioner
+-        repository: /sig-storage/csi-provisioner
 +        repository: /giantswarm/csi-provisioner
-         tag: v5.2.0
+         tag: v6.1.0
          pullPolicy: IfNotPresent
      csiResizer:
--        repository: registry.k8s.io/sig-storage/csi-resizer
+-        repository: /sig-storage/csi-resizer
 +        repository: /giantswarm/csi-resizer
-         tag: v1.13.1
+         tag: v2.0.0
          pullPolicy: IfNotPresent
      csiSnapshotter:
--        repository: registry.k8s.io/sig-storage/csi-snapshotter
+-        repository: /sig-storage/csi-snapshotter
 +        repository: /giantswarm/csi-snapshotter
-         tag: v8.2.0
+         tag: v8.4.0
          pullPolicy: IfNotPresent
      livenessProbe:
--        repository: registry.k8s.io/sig-storage/livenessprobe
+-        repository: /sig-storage/livenessprobe
 +        repository: /giantswarm/livenessprobe
-         tag: v2.15.0
+         tag: v2.17.0
          pullPolicy: IfNotPresent
      nodeDriverRegistrar:
--        repository: registry.k8s.io/sig-storage/csi-node-driver-registrar
+-        repository: /sig-storage/csi-node-driver-registrar
 +        repository: /giantswarm/csi-node-driver-registrar
-         tag: v2.13.0
+         tag: v2.15.0
          pullPolicy: IfNotPresent
      externalSnapshotter:
--        repository: registry.k8s.io/sig-storage/snapshot-controller
+-        repository: /sig-storage/snapshot-controller
 +        repository: /giantswarm/snapshot-controller
-         tag: v8.2.0
+         tag: v8.4.0
          pullPolicy: IfNotPresent
  
  serviceAccount:
@@ -53,7 +53,7 @@ index 17b0f4f..c27bee4 100755
  
  rbac:
    create: true
-@@ -83,30 +83,35 @@ controller:
+@@ -84,30 +84,35 @@ controller:
    resources:
      csiProvisioner:
        limits:
@@ -89,7 +89,7 @@ index 17b0f4f..c27bee4 100755
          memory: 200Mi
        requests:
          cpu: 10m
-@@ -127,18 +132,21 @@ node:
+@@ -137,18 +142,21 @@ node:
    resources:
      livenessProbe:
        limits:
@@ -111,7 +111,7 @@ index 17b0f4f..c27bee4 100755
          memory: 300Mi
        requests:
          cpu: 10m
-@@ -159,7 +167,7 @@ externalSnapshotter:
+@@ -169,7 +177,7 @@ externalSnapshotter:
        memory: 20Mi
    # Create volume snapshot CRDs.
    customResourceDefinitions:
@@ -120,10 +120,10 @@ index 17b0f4f..c27bee4 100755
  
  ## volumeSnapshotClass resource example:
  volumeSnapshotClass:
-@@ -191,3 +199,10 @@ storageClass:
- #   volumeBindingMode: Immediate
- #   mountOptions:
- #     - nfsvers=4.1
+@@ -228,3 +236,10 @@ storageClass:
+ #     volumeBindingMode: Immediate
+ #     mountOptions:
+ #       - nfsvers=4.1
 +
 +name: csi-driver-nfs
 +serviceType: managed
