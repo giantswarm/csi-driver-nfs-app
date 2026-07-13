@@ -1,39 +1,39 @@
 customLabels: {}
 image:
-    baseRepo: gsoci.azurecr.io
+    baseRepo: registry.k8s.io
     nfs:
-        repository: /giantswarm/nfsplugin
-        tag: v4.13.1
+        repository: registry.k8s.io/sig-storage/nfsplugin
+        tag: v4.13.4
         pullPolicy: IfNotPresent
     csiProvisioner:
-        repository: /giantswarm/csi-provisioner
-        tag: v6.1.0
+        repository: /sig-storage/csi-provisioner
+        tag: v6.3.0
         pullPolicy: IfNotPresent
     csiResizer:
-        repository: /giantswarm/csi-resizer
-        tag: v2.0.0
+        repository: /sig-storage/csi-resizer
+        tag: v2.2.0
         pullPolicy: IfNotPresent
     csiSnapshotter:
-        repository: /giantswarm/csi-snapshotter
-        tag: v8.4.0
+        repository: /sig-storage/csi-snapshotter
+        tag: v8.6.0
         pullPolicy: IfNotPresent
     livenessProbe:
-        repository: /giantswarm/livenessprobe
-        tag: v2.17.0
+        repository: /sig-storage/livenessprobe
+        tag: v2.19.0
         pullPolicy: IfNotPresent
     nodeDriverRegistrar:
-        repository: /giantswarm/csi-node-driver-registrar
-        tag: v2.15.0
+        repository: /sig-storage/csi-node-driver-registrar
+        tag: v2.17.0
         pullPolicy: IfNotPresent
     externalSnapshotter:
-        repository: /giantswarm/snapshot-controller
-        tag: v8.4.0
+        repository: /sig-storage/snapshot-controller
+        tag: v8.6.0
         pullPolicy: IfNotPresent
 
 serviceAccount:
-  create: true  # When true, service accounts will be created for you. Set to false if you want to use your own.
-  controller: csi-nfs-controller-sa  # Name of Service Account to be created or used
-  node: csi-nfs-node-sa  # Name of Service Account to be created or used
+  create: true # When true, service accounts will be created for you. Set to false if you want to use your own.
+  controller: csi-nfs-controller-sa # Name of Service Account to be created or used
+  node: csi-nfs-node-sa # Name of Service Account to be created or used
 
 rbac:
   create: true
@@ -53,6 +53,7 @@ kubeletDir: /var/lib/kubelet
 controller:
   name: csi-nfs-controller
   replicas: 1
+  revisionHistoryLimit: 10
   strategyType: Recreate
   runOnMaster: false
   runOnControlPlane: false
@@ -84,44 +85,40 @@ controller:
   resources:
     csiProvisioner:
       limits:
-        cpu: 100m
         memory: 400Mi
       requests:
         cpu: 10m
         memory: 20Mi
     csiResizer:
       limits:
-        cpu: 100m
         memory: 400Mi
       requests:
         cpu: 10m
         memory: 20Mi
     csiSnapshotter:
       limits:
-        cpu: 100m
         memory: 200Mi
       requests:
         cpu: 10m
         memory: 20Mi
     livenessProbe:
       limits:
-        cpu: 100m
         memory: 100Mi
       requests:
         cpu: 10m
         memory: 20Mi
     nfs:
       limits:
-        cpu: 100m
         memory: 200Mi
       requests:
         cpu: 10m
         memory: 20Mi
 
 nodeDriverRegistrar:
+  timeout: 60
   healthPort: 19809
   livenessProbe:
-    enabled: false
+    enabled: true
     initialDelaySeconds: 20
     timeoutSeconds: 10
     periodSeconds: 5
@@ -130,6 +127,7 @@ nodeDriverRegistrar:
 node:
   name: csi-nfs-node
   dnsPolicy: ClusterFirstWithHostNet  # available values: Default, ClusterFirstWithHostNet, ClusterFirst
+  revisionHistoryLimit: 10
   maxUnavailable: 1
   logLevel: 5
   livenessProbe:
@@ -142,21 +140,18 @@ node:
   resources:
     livenessProbe:
       limits:
-        cpu: 100m
         memory: 100Mi
       requests:
         cpu: 10m
         memory: 20Mi
     nodeDriverRegistrar:
       limits:
-        cpu: 100m
         memory: 100Mi
       requests:
         cpu: 10m
         memory: 20Mi
     nfs:
       limits:
-        cpu: 100m
         memory: 300Mi
       requests:
         cpu: 10m
@@ -169,6 +164,7 @@ externalSnapshotter:
   deletionPolicy: Delete
   controller:
     replicas: 1
+    revisionHistoryLimit: 10
   resources:
     limits:
       memory: 300Mi
@@ -177,7 +173,7 @@ externalSnapshotter:
       memory: 20Mi
   # Create volume snapshot CRDs.
   customResourceDefinitions:
-    enabled: true   # if set true, VolumeSnapshot, VolumeSnapshotContent and VolumeSnapshotClass CRDs will be created. Set it false, If they already exist in cluster.
+    enabled: true   #if set true, VolumeSnapshot, VolumeSnapshotContent and VolumeSnapshotClass CRDs will be created. Set it false, If they already exist in cluster.
 
 ## volumeSnapshotClass resource example:
 volumeSnapshotClass:
@@ -236,10 +232,3 @@ storageClass:
 #     volumeBindingMode: Immediate
 #     mountOptions:
 #       - nfsvers=4.1
-
-name: csi-driver-nfs
-serviceType: managed
-
-project:
-  branch: "[[ .Branch ]]"
-  commit: "[[ .SHA ]]"
