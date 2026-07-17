@@ -183,6 +183,9 @@
                         }
                     }
                 },
+                "revisionHistoryLimit": {
+                    "type": "integer"
+                },
                 "runOnControlPlane": {
                     "type": "boolean"
                 },
@@ -238,6 +241,9 @@
                     "type": "object",
                     "properties": {
                         "replicas": {
+                            "type": "integer"
+                        },
+                        "revisionHistoryLimit": {
                             "type": "integer"
                         }
                     }
@@ -535,6 +541,9 @@
                         }
                     }
                 },
+                "revisionHistoryLimit": {
+                    "type": "integer"
+                },
                 "tolerations": {
                     "type": "array",
                     "items": {
@@ -573,6 +582,9 @@
                             "type": "integer"
                         }
                     }
+                },
+                "timeout": {
+                    "type": "integer"
                 }
             }
         },

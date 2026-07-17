@@ -2,10 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'Merge pull request #1042 from andyzhangx/cut-v4.13.1...'
-      sha: d1b043ffd67318fa71b4b3d4508707882cf92fdc
+      commitTitle: 'Merge pull request #1182 from andyzhangx/cut-v4.13.4...'
+      sha: f09798c0f1e7d1ae3b32dc8dfef67f6e848e8761
       tags:
-      - v4.13.1
+      - v4.13.4
     path: csi-driver-nfs
   path: vendor
 - contents:
