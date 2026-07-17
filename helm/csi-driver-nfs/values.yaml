@@ -1,39 +1,39 @@
 customLabels: {}
 image:
-    baseRepo: registry.k8s.io
+    baseRepo: gsoci.azurecr.io
     nfs:
-        repository: registry.k8s.io/sig-storage/nfsplugin
+        repository: /giantswarm/nfsplugin
         tag: v4.13.4
         pullPolicy: IfNotPresent
     csiProvisioner:
-        repository: /sig-storage/csi-provisioner
+        repository: /giantswarm/csi-provisioner
         tag: v6.3.0
         pullPolicy: IfNotPresent
     csiResizer:
-        repository: /sig-storage/csi-resizer
+        repository: /giantswarm/csi-resizer
         tag: v2.2.0
         pullPolicy: IfNotPresent
     csiSnapshotter:
-        repository: /sig-storage/csi-snapshotter
+        repository: /giantswarm/csi-snapshotter
         tag: v8.6.0
         pullPolicy: IfNotPresent
     livenessProbe:
-        repository: /sig-storage/livenessprobe
+        repository: /giantswarm/livenessprobe
         tag: v2.19.0
         pullPolicy: IfNotPresent
     nodeDriverRegistrar:
-        repository: /sig-storage/csi-node-driver-registrar
+        repository: /giantswarm/csi-node-driver-registrar
         tag: v2.17.0
         pullPolicy: IfNotPresent
     externalSnapshotter:
-        repository: /sig-storage/snapshot-controller
+        repository: /giantswarm/snapshot-controller
         tag: v8.6.0
         pullPolicy: IfNotPresent
 
 serviceAccount:
-  create: true # When true, service accounts will be created for you. Set to false if you want to use your own.
-  controller: csi-nfs-controller-sa # Name of Service Account to be created or used
-  node: csi-nfs-node-sa # Name of Service Account to be created or used
+  create: true  # When true, service accounts will be created for you. Set to false if you want to use your own.
+  controller: csi-nfs-controller-sa  # Name of Service Account to be created or used
+  node: csi-nfs-node-sa  # Name of Service Account to be created or used
 
 rbac:
   create: true
@@ -85,30 +85,35 @@ controller:
   resources:
     csiProvisioner:
       limits:
+        cpu: 100m
         memory: 400Mi
       requests:
         cpu: 10m
         memory: 20Mi
     csiResizer:
       limits:
+        cpu: 100m
         memory: 400Mi
       requests:
         cpu: 10m
         memory: 20Mi
     csiSnapshotter:
       limits:
+        cpu: 100m
         memory: 200Mi
       requests:
         cpu: 10m
         memory: 20Mi
     livenessProbe:
       limits:
+        cpu: 100m
         memory: 100Mi
       requests:
         cpu: 10m
         memory: 20Mi
     nfs:
       limits:
+        cpu: 100m
         memory: 200Mi
       requests:
         cpu: 10m
@@ -140,18 +145,21 @@ node:
   resources:
     livenessProbe:
       limits:
+        cpu: 100m
         memory: 100Mi
       requests:
         cpu: 10m
         memory: 20Mi
     nodeDriverRegistrar:
       limits:
+        cpu: 100m
         memory: 100Mi
       requests:
         cpu: 10m
         memory: 20Mi
     nfs:
       limits:
+        cpu: 100m
         memory: 300Mi
       requests:
         cpu: 10m
@@ -173,7 +181,7 @@ externalSnapshotter:
       memory: 20Mi
   # Create volume snapshot CRDs.
   customResourceDefinitions:
-    enabled: true   #if set true, VolumeSnapshot, VolumeSnapshotContent and VolumeSnapshotClass CRDs will be created. Set it false, If they already exist in cluster.
+    enabled: true   # if set true, VolumeSnapshot, VolumeSnapshotContent and VolumeSnapshotClass CRDs will be created. Set it false, If they already exist in cluster.
 
 ## volumeSnapshotClass resource example:
 volumeSnapshotClass:
@@ -232,3 +240,10 @@ storageClass:
 #     volumeBindingMode: Immediate
 #     mountOptions:
 #       - nfsvers=4.1
+
+name: csi-driver-nfs
+serviceType: managed
+
+project:
+  branch: "[[ .Branch ]]"
+  commit: "[[ .SHA ]]"

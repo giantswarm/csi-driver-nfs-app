@@ -13,6 +13,8 @@ labels:
   app.kubernetes.io/name: "{{ template "nfs.name" . }}"
   app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
   helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+  giantswarm.io/service-type: managed
+  io.giantswarm.aplication.team: {{ index .Chart.Annotations "io.giantswarm.application.team" | quote }}
   {{- if .Values.customLabels }}
 {{ toYaml .Values.customLabels | indent 2 -}}
   {{- end }}
