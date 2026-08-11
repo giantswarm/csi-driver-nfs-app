@@ -1,0 +1,61 @@
+name: Validate sync diffs
+
+on:
+  pull_request:
+    paths:
+      - 'helm/**'
+      - 'sync/**'
+      - 'vendir.yml'
+      - 'vendir.lock.yml'
+
+permissions: {}
+
+jobs:
+  check:
+    name: Check sync.sh was called
+    runs-on: ubuntu-24.04
+    # release pull requests bump the chart version, which sync.sh resets to the
+    # last published release.
+    if: "!startsWith(github.head_ref, 'main#release#')"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install vendir
+        uses: giantswarm/install-binary-action@5bef88f65012037dd836117c8d344b21bb559854 # v4.1.0
+        with:
+          binary: "vendir"
+          # repo: carvel-dev/vendir
+          version: "0.46.0"
+          download_url: "https://github.com/carvel-dev/vendir/releases/download/v${version}/vendir-linux-amd64"
+          smoke_test: "${binary} --version"
+
+      - name: Install jq
+        uses: giantswarm/install-binary-action@5bef88f65012037dd836117c8d344b21bb559854 # v4.1.0
+        with:
+          binary: "jq"
+          # repo: jqlang/jq
+          version: "jq-1.8.1"
+          download_url: "https://github.com/jqlang/jq/releases/download/${version}/jq-linux-amd64"
+          binary_new_name: "jq"
+          smoke_test: "${binary} --version"
+
+      - name: Install yq
+        uses: giantswarm/install-binary-action@5bef88f65012037dd836117c8d344b21bb559854 # v4.1.0
+        with:
+          binary: "yq"
+          # repo: mikefarah/yq
+          version: "4.50.1"
+          download_url: "https://github.com/mikefarah/yq/releases/download/v${version}/yq_linux_amd64"
+          binary_new_name: "yq"
+          smoke_test: "${binary} --version"
+
+      # the CRD patch compares the vendored CRDs against the default branch
+      - name: Fetch the default branch
+        run: git fetch --depth=1 origin +refs/heads/main:refs/remotes/origin/main
+
+      - name: Run sync script
+        run: ./sync/sync.sh
+
+      - name: Check there is no diff
+        run: git diff --exit-code && [ -z "$(git status --porcelain)" ]

@@ -2,5 +2,17 @@
   "extends": [
     // Base config - https://github.com/giantswarm/renovate-presets/blob/main/default.json5
     "github>giantswarm/renovate-presets:default.json5",
+    "github>giantswarm/renovate-presets:disable-helmv3.json5",
+    "github>giantswarm/renovate-presets:disable-helm-values.json5",
+  ],
+  "packageRules": [
+    {
+      // The sync workflow pushes the patched chart to the branch; that commit needs review.
+      "matchFileNames": ["vendir.yml"],
+      "automerge": false,
+    },
+  ],
+  "prBodyNotes": [
+    "A workflow runs the sync script at `sync/sync.sh` and pushes the result to this branch. Review that commit before you merge.",
   ],
 }
