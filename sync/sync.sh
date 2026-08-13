@@ -20,6 +20,8 @@ helm dependency update helm/csi-driver-nfs/
 ./sync/patches/crd-csi-snapshot/patch.sh
 
 # generate schema
-set -x
-helm schema-gen helm/csi-driver-nfs/values.yaml | tee helm/csi-driver-nfs/values.schema.json > /dev/null
+echo "Generating values schema..."
 { set +x; } 2>/dev/null
+helm plugin install https://github.com/losisin/helm-values-schema-json.git --verify=false || true
+helm schema -f helm/csi-driver-nfs/values.yaml -o helm/csi-driver-nfs/values.schema.json
+echo "✓ Schema generated successfully"
