@@ -45,7 +45,7 @@ jobs:
         with:
           binary: "yq"
           # repo: mikefarah/yq
-          version: "4.53.3"
+          version: "4.53.4"
           download_url: "https://github.com/mikefarah/yq/releases/download/v${version}/yq_linux_amd64"
           binary_new_name: "yq"
           smoke_test: "${binary} --version"
