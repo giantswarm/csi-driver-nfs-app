@@ -28,7 +28,7 @@ jobs:
         with:
           binary: "vendir"
           # repo: carvel-dev/vendir
-          version: "0.46.0"
+          version: "0.46.2"
           download_url: "https://github.com/carvel-dev/vendir/releases/download/v${version}/vendir-linux-amd64"
           smoke_test: "${binary} --version"
 
