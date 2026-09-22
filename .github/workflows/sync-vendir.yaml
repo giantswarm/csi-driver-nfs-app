@@ -11,7 +11,7 @@ permissions: {}
 jobs:
   sync:
     name: Run sync script and push
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     # our own push triggers this workflow again. the sync is idempotent so the
     # second run pushes nothing, but skip it to save a run.
     if: "!startsWith(github.event.head_commit.message, 'chore: apply sync patches')"
