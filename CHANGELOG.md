@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Swapped helm schema gen plugin to use a maintained plugin.
 - Update architect to v10.10.0 (giantswarm/csi-driver-nfs-app#57)
+- Update architect to v10.11.1 (giantswarm/csi-driver-nfs-app#58)
 
 ### Added
 
