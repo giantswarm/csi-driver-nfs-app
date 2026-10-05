@@ -18,6 +18,7 @@ helm dependency update helm/csi-driver-nfs/
 ./sync/patches/chart/patch.sh
 ./sync/patches/helpers/patch.sh
 ./sync/patches/crd-csi-snapshot/patch.sh
+./sync/patches/chart-label/patch.sh
 
 # generate schema
 echo "Generating values schema..."
