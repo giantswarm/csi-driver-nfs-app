@@ -12,9 +12,7 @@ labels:
   app.kubernetes.io/managed-by: "{{ .Release.Service }}"
   app.kubernetes.io/name: "{{ template "nfs.name" . }}"
   app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
-  helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimAll "-._" | quote }}
-  giantswarm.io/service-type: managed
-  io.giantswarm.aplication.team: {{ index .Chart.Annotations "io.giantswarm.application.team" | quote }}
+  helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
   {{- if .Values.customLabels }}
 {{ toYaml .Values.customLabels | indent 2 -}}
   {{- end }}
