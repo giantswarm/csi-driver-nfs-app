@@ -1,0 +1,111 @@
+name: Create team issue for vendir update
+
+on:
+  push:
+    branches:
+      - 'renovate/vendir/**'
+
+permissions: {}
+
+env:
+  ISSUE_REPO: giantswarm/giantswarm
+  PROJECT_OWNER: giantswarm
+  PROJECT_NUMBER: "273"
+  ISSUE_LABEL: team/rocket
+  STATUS_VALUE: Inbox
+  TEAM_VALUE: Rocket
+
+jobs:
+  create-issue:
+    name: Create issue and add it to the project board
+    runs-on: ubuntu-26.04
+    # the sync workflow pushes to the same branch. skip that push.
+    if: "!startsWith(github.event.head_commit.message, 'chore: apply sync patches')"
+    env:
+      GH_TOKEN: ${{ secrets.ISSUE_AUTOMATION }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Check for an existing issue
+        id: existing
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          count=$(gh issue list -R "${ISSUE_REPO}" --state all \
+            --search "\"${BRANCH}\" in:body" --json number --jq 'length')
+          echo "count=${count}" >> "${GITHUB_OUTPUT}"
+
+      - name: Create issue
+        id: issue
+        if: steps.existing.outputs.count == '0'
+        env:
+          BRANCH: ${{ github.ref_name }}
+          REPO: ${{ github.repository }}
+        run: |
+          repo_name="${REPO#*/}"
+          git diff -U2 origin/main...HEAD -- vendir.yml > vendir.diff || true
+          {
+            echo "Renovate pushed the branch \`${BRANCH}\` in [${REPO}](https://github.com/${REPO}/tree/${BRANCH})."
+            echo
+            echo "Changes to \`vendir.yml\`:"
+            echo
+            echo '```diff'
+            cat vendir.diff
+            echo '```'
+          } > body.md
+          url=$(gh issue create -R "${ISSUE_REPO}" \
+            --title "Vendir PR opened for ${repo_name}" \
+            --label "${ISSUE_LABEL}" \
+            --body-file body.md)
+          echo "url=${url}" >> "${GITHUB_OUTPUT}"
+
+      - name: Add issue to project board
+        if: steps.existing.outputs.count == '0'
+        env:
+          ISSUE_URL: ${{ steps.issue.outputs.url }}
+        run: |
+          # look up the project and the field options by name
+          gh api graphql -f owner="${PROJECT_OWNER}" -F number="${PROJECT_NUMBER}" -f query='
+            query($owner: String!, $number: Int!) {
+              organization(login: $owner) {
+                projectV2(number: $number) {
+                  id
+                  fields(first: 50) {
+                    nodes {
+                      ... on ProjectV2SingleSelectField { id name options { id name } }
+                    }
+                  }
+                }
+              }
+            }' > project.json
+
+          project_id=$(jq -r '.data.organization.projectV2.id' project.json)
+          field() { # field name, option prefix, output: "field_id option_id"
+            jq -r --arg f "$1" --arg o "$2" '
+              .data.organization.projectV2.fields.nodes[]
+              | select(.name == $f)
+              | . as $field
+              | [$field.id, ($field.options[] | select(.name | startswith($o)) | .id)]
+              | join(" ")' project.json | head -n1
+          }
+          read -r status_field status_option <<< "$(field Status "${STATUS_VALUE}")"
+          read -r team_field team_option <<< "$(field Team "${TEAM_VALUE}")"
+          for v in "${project_id}" "${status_field}" "${status_option}" "${team_field}" "${team_option}"; do
+            if [ -z "${v}" ] || [ "${v}" = "null" ]; then
+              echo "Project field lookup failed." >&2
+              exit 1
+            fi
+          done
+
+          item_id=$(gh project item-add "${PROJECT_NUMBER}" --owner "${PROJECT_OWNER}" \
+            --url "${ISSUE_URL}" --format json --jq '.id')
+
+          set_value() {
+            gh project item-edit --id "${item_id}" --project-id "${project_id}" \
+              --field-id "$1" --single-select-option-id "$2"
+          }
+          set_value "${status_field}" "${status_option}"
+          set_value "${team_field}" "${team_option}"
