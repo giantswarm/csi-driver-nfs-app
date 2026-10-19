@@ -7,12 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Update upstream csi-driver-nfs chart to v4.13.5.
+
 ### Fixed
 
 - The `helm.sh/chart` label is valid for long chart versions: the 63-character cut trims the whole trailing run of `-`, `.` and `_`.
 - Fix changelog generation script.
-
-### Changed
 
 - Swapped helm schema gen plugin to use a maintained plugin.
 - Update architect to v10.10.0 (giantswarm/csi-driver-nfs-app#57)
