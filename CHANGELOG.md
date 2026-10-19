@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Swapped helm schema gen plugin to use a maintained plugin.
 - Update architect to v10.10.0 (giantswarm/csi-driver-nfs-app#57)
+- Update carvel-dev/vendir to v0.46.3 (giantswarm/csi-driver-nfs-app#70)
 
 ### Fixed
 
