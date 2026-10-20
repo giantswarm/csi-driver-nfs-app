@@ -13,9 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add a check which fails a pull request if the sync script was not run.
 - Add shared helpers file to sync dir.
 - Add Github action to create an issue in `giantswarm/giantswarm` for Team Rocket on vendir updates.
-
 - Swapped helm schema gen plugin to use a maintained plugin.
 - Update architect to v10.10.0 (giantswarm/csi-driver-nfs-app#57)
+- Update architect to v10.11.1 (giantswarm/csi-driver-nfs-app#58)
 - Update carvel-dev/vendir to v0.46.3 (giantswarm/csi-driver-nfs-app#70)
 
 ### Changed
