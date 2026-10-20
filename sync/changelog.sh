@@ -15,7 +15,7 @@ CHANGELOG="${REPO_DIR}/CHANGELOG.md" ; readonly CHANGELOG
 # get the upstream sync version from vendir.yml
 UPSTREAM_SYNC_VERSION=$(yq -r .directories[0].contents[0].git.ref "${REPO_DIR}"/vendir.yml) ; readonly UPSTREAM_SYNC_VERSION
 
-readonly ENTRY_PREFIX="- Update upstream whereabouts chart to "
+readonly ENTRY_PREFIX="- Update upstream csi-driver-nfs chart to "
 ENTRY="${ENTRY_PREFIX}${UPSTREAM_SYNC_VERSION}." ; readonly ENTRY
 
 echo "Adding changelog entry: ${ENTRY}"

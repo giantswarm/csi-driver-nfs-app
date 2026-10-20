@@ -7,15 +7,15 @@ directories:
         git:
           depth: 1
           url: https://github.com/kubernetes-csi/csi-driver-nfs
-          ref: "v4.13.4"
+          ref: "v4.13.5"
         includePaths:
-          - charts/latest/**/*
+          - charts/v4.13.5/**/*
         excludePaths:
-          - charts/latest/*.tgz
+          - charts/v4.13.5/*.tgz
   - path: helm
     contents:
     - path: .
       directory:
-        path: vendor/csi-driver-nfs/charts/latest
+        path: vendor/csi-driver-nfs/charts/v4.13.5
       ignorePaths:
           - csi-driver-nfs/templates/policyexception.yaml

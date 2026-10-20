@@ -3,7 +3,7 @@ image:
     baseRepo: gsoci.azurecr.io
     nfs:
         repository: /giantswarm/nfsplugin
-        tag: v4.13.4
+        tag: v4.13.5
         pullPolicy: IfNotPresent
     csiProvisioner:
         repository: /giantswarm/csi-provisioner
@@ -11,7 +11,7 @@ image:
         pullPolicy: IfNotPresent
     csiResizer:
         repository: /giantswarm/csi-resizer
-        tag: v2.2.0
+        tag: v2.2.1
         pullPolicy: IfNotPresent
     csiSnapshotter:
         repository: /giantswarm/csi-snapshotter
@@ -60,6 +60,9 @@ controller:
   enableSnapshotter: true
   useTarCommandInSnapshot: false
   enableSnapshotCompression: true
+  maxSnapshotArchiveSize: 0
+  maxSnapshotFileSize: 0
+  maxSnapshotFiles: 0
   livenessProbe:
     healthPort: 29652
   logLevel: 5
@@ -186,6 +189,8 @@ externalSnapshotter:
 ## volumeSnapshotClass resource example:
 volumeSnapshotClass:
   create: false
+#   annotations:
+#     snapshot.storage.kubernetes.io/is-default-class: "true"
   name: csi-nfs-snapclass
   deletionPolicy: Delete
   

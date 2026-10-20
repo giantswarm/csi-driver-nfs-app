@@ -4,6 +4,7 @@
     "github>giantswarm/renovate-presets:default.json5",
     "github>giantswarm/renovate-presets:disable-helmv3.json5",
     "github>giantswarm/renovate-presets:disable-helm-values.json5",
+    "github>giantswarm/csi-driver-nfs-app:renovate-vendir-custom.json5",
   ],
   "packageRules": [
     {
