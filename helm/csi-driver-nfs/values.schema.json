@@ -31,6 +31,15 @@
                 "logLevel": {
                     "type": "integer"
                 },
+                "maxSnapshotArchiveSize": {
+                    "type": "integer"
+                },
+                "maxSnapshotFileSize": {
+                    "type": "integer"
+                },
+                "maxSnapshotFiles": {
+                    "type": "integer"
+                },
                 "name": {
                     "type": "string"
                 },
