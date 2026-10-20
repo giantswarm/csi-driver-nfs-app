@@ -1,0 +1,17 @@
+{
+  "customManagers": [
+    {
+      // The built-in vendir manager updates only the git `ref` in vendir.yml.
+      // The chart paths also contain the version, so this manager updates them.
+      // depName and datasource are the same as the built-in vendir manager uses,
+      // so all updates go into the same branch as the `ref` update.
+      "customType": "regex",
+      "managerFilePatterns": ["/^vendir\\.yml$/"],
+      "matchStrings": [
+        "charts/(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
+      ],
+      "depNameTemplate": "https://github.com/kubernetes-csi/csi-driver-nfs",
+      "datasourceTemplate": "git-refs",
+    },
+  ],
+}
