@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Use the `giantswarm-release` GitHub App instead of the taylorbot personal access token to push sync commits.
 - Update upstream csi-driver-nfs chart to v4.13.5.
+- Update architect to v10.14.9 (giantswarm/csi-driver-nfs-app#73)
 
 ### Fixed
 
