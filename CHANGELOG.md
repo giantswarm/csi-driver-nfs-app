@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update architect to v10.14.10 (giantswarm/csi-driver-nfs-app#74)
 - Update architect to v10.14.18 (giantswarm/csi-driver-nfs-app#79)
 - Update architect to v10.15.1 (giantswarm/csi-driver-nfs-app#81)
+- Update architect to v10.16.3 (giantswarm/csi-driver-nfs-app#82)
 
 ### Fixed
 
