@@ -15,7 +15,7 @@ index 394592dd..e9a3b35e 100755
  
  rbac:
    create: true
-@@ -88,30 +88,35 @@ controller:
+@@ -89,30 +89,35 @@ controller:
    resources:
      csiProvisioner:
        limits:
@@ -51,7 +51,29 @@ index 394592dd..e9a3b35e 100755
          memory: 200Mi
        requests:
          cpu: 10m
-@@ -176,7 +181,7 @@ externalSnapshotter:
+@@ -144,18 +149,21 @@ node:
+   resources:
+     livenessProbe:
+       limits:
++        cpu: 100m
+         memory: 100Mi
+       requests:
+         cpu: 10m
+         memory: 20Mi
+     nodeDriverRegistrar:
+       limits:
++        cpu: 100m
+         memory: 100Mi
+       requests:
+         cpu: 10m
+         memory: 20Mi
+     nfs:
+       limits:
++        cpu: 100m
+         memory: 300Mi
+       requests:
+         cpu: 10m
+@@ -177,7 +185,7 @@ externalSnapshotter:
        memory: 20Mi
    # Create volume snapshot CRDs.
    customResourceDefinitions:
@@ -60,7 +82,7 @@ index 394592dd..e9a3b35e 100755
  
  ## volumeSnapshotClass resource example:
  volumeSnapshotClass:
-@@ -237,3 +242,6 @@ storageClass:
+@@ -238,3 +246,6 @@ storageClass:
  #     volumeBindingMode: Immediate
  #     mountOptions:
  #       - nfsvers=4.1

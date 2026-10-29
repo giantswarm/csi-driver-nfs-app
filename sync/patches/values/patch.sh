@@ -16,7 +16,7 @@ set -x
 git apply "${script_dir_rel}/_values.yaml.patch"
 
 # Some changes to values.yaml cannot be applied using the patch file as the
-# changes are too close to each other in file and the patch file does not
+# changes are too close to each other in the file and the patch file does not
 # contain enough context for the patch to apply cleanly. Instead we make those
 # changes manually after the base patch has been applied.
 
