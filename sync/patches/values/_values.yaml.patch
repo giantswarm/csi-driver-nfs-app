@@ -1,46 +1,8 @@
 diff --git a/helm/csi-driver-nfs/values.yaml b/helm/csi-driver-nfs/values.yaml
-index 394592d..155ee63 100755
+index 394592dd..e9a3b35e 100755
 --- a/helm/csi-driver-nfs/values.yaml
 +++ b/helm/csi-driver-nfs/values.yaml
-@@ -1,39 +1,39 @@
- customLabels: {}
- image:
--    baseRepo: registry.k8s.io
-+    baseRepo: gsoci.azurecr.io
-     nfs:
--        repository: registry.k8s.io/sig-storage/nfsplugin
-+        repository: /giantswarm/nfsplugin
-         tag: v4.13.5
-         pullPolicy: IfNotPresent
-     csiProvisioner:
--        repository: /sig-storage/csi-provisioner
-+        repository: /giantswarm/csi-provisioner
-         tag: v6.3.0
-         pullPolicy: IfNotPresent
-     csiResizer:
--        repository: /sig-storage/csi-resizer
-+        repository: /giantswarm/csi-resizer
-         tag: v2.2.1
-         pullPolicy: IfNotPresent
-     csiSnapshotter:
--        repository: /sig-storage/csi-snapshotter
-+        repository: /giantswarm/csi-snapshotter
-         tag: v8.6.0
-         pullPolicy: IfNotPresent
-     livenessProbe:
--        repository: /sig-storage/livenessprobe
-+        repository: /giantswarm/livenessprobe
-         tag: v2.19.0
-         pullPolicy: IfNotPresent
-     nodeDriverRegistrar:
--        repository: /sig-storage/csi-node-driver-registrar
-+        repository: /giantswarm/csi-node-driver-registrar
-         tag: v2.17.0
-         pullPolicy: IfNotPresent
-     externalSnapshotter:
--        repository: /sig-storage/snapshot-controller
-+        repository: /giantswarm/snapshot-controller
-         tag: v8.6.0
+@@ -31,9 +31,9 @@ image:
          pullPolicy: IfNotPresent
  
  serviceAccount:
@@ -89,29 +51,7 @@ index 394592d..155ee63 100755
          memory: 200Mi
        requests:
          cpu: 10m
-@@ -143,18 +148,21 @@ node:
-   resources:
-     livenessProbe:
-       limits:
-+        cpu: 100m
-         memory: 100Mi
-       requests:
-         cpu: 10m
-         memory: 20Mi
-     nodeDriverRegistrar:
-       limits:
-+        cpu: 100m
-         memory: 100Mi
-       requests:
-         cpu: 10m
-         memory: 20Mi
-     nfs:
-       limits:
-+        cpu: 100m
-         memory: 300Mi
-       requests:
-         cpu: 10m
-@@ -176,7 +184,7 @@ externalSnapshotter:
+@@ -176,7 +181,7 @@ externalSnapshotter:
        memory: 20Mi
    # Create volume snapshot CRDs.
    customResourceDefinitions:
@@ -120,14 +60,10 @@ index 394592d..155ee63 100755
  
  ## volumeSnapshotClass resource example:
  volumeSnapshotClass:
-@@ -237,3 +245,10 @@ storageClass:
+@@ -237,3 +242,6 @@ storageClass:
  #     volumeBindingMode: Immediate
  #     mountOptions:
  #       - nfsvers=4.1
 +
 +name: csi-driver-nfs
 +serviceType: managed
-+
-+project:
-+  branch: "[[ .Branch ]]"
-+  commit: "[[ .SHA ]]"

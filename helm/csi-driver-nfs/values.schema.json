@@ -312,6 +312,9 @@
                 "enableInlineVolume": {
                     "type": "boolean"
                 },
+                "fsGroupPolicy": {
+                    "type": "string"
+                },
                 "propagateHostMountOptions": {
                     "type": "boolean"
                 }
@@ -473,9 +476,6 @@
                                 "limits": {
                                     "type": "object",
                                     "properties": {
-                                        "cpu": {
-                                            "type": "string"
-                                        },
                                         "memory": {
                                             "type": "string"
                                         }
@@ -500,9 +500,6 @@
                                 "limits": {
                                     "type": "object",
                                     "properties": {
-                                        "cpu": {
-                                            "type": "string"
-                                        },
                                         "memory": {
                                             "type": "string"
                                         }
@@ -527,9 +524,6 @@
                                 "limits": {
                                     "type": "object",
                                     "properties": {
-                                        "cpu": {
-                                            "type": "string"
-                                        },
                                         "memory": {
                                             "type": "string"
                                         }
@@ -594,17 +588,6 @@
                 },
                 "timeout": {
                     "type": "integer"
-                }
-            }
-        },
-        "project": {
-            "type": "object",
-            "properties": {
-                "branch": {
-                    "type": "string"
-                },
-                "commit": {
-                    "type": "string"
                 }
             }
         },

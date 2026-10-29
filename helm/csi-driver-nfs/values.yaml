@@ -3,7 +3,7 @@ image:
     baseRepo: gsoci.azurecr.io
     nfs:
         repository: /giantswarm/nfsplugin
-        tag: v4.13.5
+        tag: v4.13.6
         pullPolicy: IfNotPresent
     csiProvisioner:
         repository: /giantswarm/csi-provisioner
@@ -45,6 +45,7 @@ driver:
 
 feature:
   enableFSGroupPolicy: true
+  fsGroupPolicy: File
   enableInlineVolume: false
   propagateHostMountOptions: false
 
@@ -148,21 +149,18 @@ node:
   resources:
     livenessProbe:
       limits:
-        cpu: 100m
         memory: 100Mi
       requests:
         cpu: 10m
         memory: 20Mi
     nodeDriverRegistrar:
       limits:
-        cpu: 100m
         memory: 100Mi
       requests:
         cpu: 10m
         memory: 20Mi
     nfs:
       limits:
-        cpu: 100m
         memory: 300Mi
       requests:
         cpu: 10m
@@ -248,7 +246,3 @@ storageClass:
 
 name: csi-driver-nfs
 serviceType: managed
-
-project:
-  branch: "[[ .Branch ]]"
-  commit: "[[ .SHA ]]"
