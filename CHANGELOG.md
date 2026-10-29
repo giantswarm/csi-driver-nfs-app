@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Update upstream csi-driver-nfs chart to v4.13.6.
+
 ### Added
 
 - Run the sync script automatically on Renovate vendir branches and push the result for review.
@@ -14,8 +18,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add shared helpers file to sync dir.
 - Add Github action to create an issue in `giantswarm/giantswarm` for Team Rocket on vendir updates.
 - Swapped helm schema gen plugin to use a maintained plugin.
-
-### Changed
 
 - Use the `giantswarm-release` GitHub App instead of the taylorbot personal access token to push sync commits.
 - Update upstream csi-driver-nfs chart to v4.13.5.

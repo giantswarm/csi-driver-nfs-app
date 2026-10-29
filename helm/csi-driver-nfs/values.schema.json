@@ -476,9 +476,6 @@
                                 "limits": {
                                     "type": "object",
                                     "properties": {
-                                        "cpu": {
-                                            "type": "string"
-                                        },
                                         "memory": {
                                             "type": "string"
                                         }
@@ -503,9 +500,6 @@
                                 "limits": {
                                     "type": "object",
                                     "properties": {
-                                        "cpu": {
-                                            "type": "string"
-                                        },
                                         "memory": {
                                             "type": "string"
                                         }
@@ -530,9 +524,6 @@
                                 "limits": {
                                     "type": "object",
                                     "properties": {
-                                        "cpu": {
-                                            "type": "string"
-                                        },
                                         "memory": {
                                             "type": "string"
                                         }

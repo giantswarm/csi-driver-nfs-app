@@ -149,21 +149,18 @@ node:
   resources:
     livenessProbe:
       limits:
-        cpu: 100m
         memory: 100Mi
       requests:
         cpu: 10m
         memory: 20Mi
     nodeDriverRegistrar:
       limits:
-        cpu: 100m
         memory: 100Mi
       requests:
         cpu: 10m
         memory: 20Mi
     nfs:
       limits:
-        cpu: 100m
         memory: 300Mi
       requests:
         cpu: 10m
