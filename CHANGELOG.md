@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Update upstream csi-driver-nfs chart to v4.13.6.
+
 ### Added
 
 - Run the sync script automatically on Renovate vendir branches and push the result for review.
@@ -18,10 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update architect to v10.11.1 (giantswarm/csi-driver-nfs-app#58)
 - Update carvel-dev/vendir to v0.46.3 (giantswarm/csi-driver-nfs-app#70)
 
-### Changed
-
 - Use the `giantswarm-release` GitHub App instead of the taylorbot personal access token to push sync commits.
-- Update upstream csi-driver-nfs chart to v4.13.5.
 - Update architect to v10.14.9 (giantswarm/csi-driver-nfs-app#73)
 - Update architect to v10.14.10 (giantswarm/csi-driver-nfs-app#74)
 - Update architect to v10.14.18 (giantswarm/csi-driver-nfs-app#79)
