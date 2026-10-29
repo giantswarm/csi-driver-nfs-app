@@ -3,7 +3,7 @@ image:
     baseRepo: gsoci.azurecr.io
     nfs:
         repository: /giantswarm/nfsplugin
-        tag: v4.13.5
+        tag: v4.13.6
         pullPolicy: IfNotPresent
     csiProvisioner:
         repository: /giantswarm/csi-provisioner
@@ -45,6 +45,7 @@ driver:
 
 feature:
   enableFSGroupPolicy: true
+  fsGroupPolicy: File
   enableInlineVolume: false
   propagateHostMountOptions: false
 
@@ -248,7 +249,3 @@ storageClass:
 
 name: csi-driver-nfs
 serviceType: managed
-
-project:
-  branch: "[[ .Branch ]]"
-  commit: "[[ .SHA ]]"

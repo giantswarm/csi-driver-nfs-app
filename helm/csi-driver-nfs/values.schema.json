@@ -312,6 +312,9 @@
                 "enableInlineVolume": {
                     "type": "boolean"
                 },
+                "fsGroupPolicy": {
+                    "type": "string"
+                },
                 "propagateHostMountOptions": {
                     "type": "boolean"
                 }
@@ -594,17 +597,6 @@
                 },
                 "timeout": {
                     "type": "integer"
-                }
-            }
-        },
-        "project": {
-            "type": "object",
-            "properties": {
-                "branch": {
-                    "type": "string"
-                },
-                "commit": {
-                    "type": "string"
                 }
             }
         },
