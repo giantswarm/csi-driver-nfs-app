@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add Github action to create an issue in `giantswarm/giantswarm` for Team Rocket on vendir updates.
 - Swapped helm schema gen plugin to use a maintained plugin.
 
+- Create the vendir update issue as the `giantswarm-project-automation` GitHub App instead of architectbot's `ISSUE_AUTOMATION` token (giantswarm/giantswarm#38800).
 - Use the `giantswarm-release` GitHub App instead of the taylorbot personal access token to push sync commits.
 - Update upstream csi-driver-nfs chart to v4.13.5.
 - Update architect to v10.10.0 (giantswarm/csi-driver-nfs-app#57)

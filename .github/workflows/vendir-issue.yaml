@@ -21,9 +21,20 @@ jobs:
     runs-on: ubuntu-26.04
     # the sync workflow pushes to the same branch. skip that push.
     if: "!startsWith(github.event.head_commit.message, 'chore: apply sync patches')"
-    env:
-      GH_TOKEN: ${{ secrets.ISSUE_AUTOMATION }}
     steps:
+      # The issue and its board item are written as the
+      # giantswarm-project-automation App, in giantswarm/giantswarm.
+      - name: Mint App token for the issue and the board
+        id: app-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ secrets.PROJECT_AUTOMATION_CLIENT_ID }}
+          private-key: ${{ secrets.PROJECT_AUTOMATION_PRIVATE_KEY }}
+          owner: giantswarm
+          repositories: giantswarm
+          permission-issues: write
+          permission-organization-projects: write
+
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -32,6 +43,7 @@ jobs:
       - name: Check for an existing issue
         id: existing
         env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
           BRANCH: ${{ github.ref_name }}
         run: |
           count=$(gh issue list -R "${ISSUE_REPO}" --state all \
@@ -42,6 +54,7 @@ jobs:
         id: issue
         if: steps.existing.outputs.count == '0'
         env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
           BRANCH: ${{ github.ref_name }}
           REPO: ${{ github.repository }}
         run: |
@@ -65,6 +78,7 @@ jobs:
       - name: Add issue to project board
         if: steps.existing.outputs.count == '0'
         env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
           ISSUE_URL: ${{ steps.issue.outputs.url }}
         run: |
           # look up the project and the field options by name
