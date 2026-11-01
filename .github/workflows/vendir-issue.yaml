@@ -114,8 +114,30 @@ jobs:
             fi
           done
 
-          item_id=$(gh project item-add "${PROJECT_NUMBER}" --owner "${PROJECT_OWNER}" \
-            --url "${ISSUE_URL}" --format json --jq '.id')
+          # The board's built-in auto-add workflow (or the issue's own `on: issues`
+          # automation in ${ISSUE_REPO}) can add it first; then take its item.
+          if ! item_id=$(gh project item-add "${PROJECT_NUMBER}" --owner "${PROJECT_OWNER}" \
+            --url "${ISSUE_URL}" --format json --jq '.id' 2>add.err); then
+            if ! grep -q "already exists in this project" add.err; then
+              cat add.err >&2
+              exit 1
+            fi
+            item_id=""
+            for _ in 1 2 3 4 5; do
+              sleep 2
+              item_id=$(gh api graphql -f url="${ISSUE_URL}" -f query='
+                query($url: URI!) {
+                  resource(url: $url) {
+                    ... on Issue { projectItems(first: 20) { nodes { id project { id } } } }
+                  }
+                }' --jq ".data.resource.projectItems.nodes[] | select(.project.id == \"${project_id}\") | .id") || item_id=""
+              [ -n "${item_id}" ] && break
+            done
+            if [ -z "${item_id}" ]; then
+              echo "The issue is on the board, but its item was not found." >&2
+              exit 1
+            fi
+          fi
 
           set_value() {
             gh project item-edit --id "${item_id}" --project-id "${project_id}" \
