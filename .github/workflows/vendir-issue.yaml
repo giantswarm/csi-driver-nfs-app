@@ -21,9 +21,20 @@ jobs:
     runs-on: ubuntu-26.04
     # the sync workflow pushes to the same branch. skip that push.
     if: "!startsWith(github.event.head_commit.message, 'chore: apply sync patches')"
-    env:
-      GH_TOKEN: ${{ secrets.ISSUE_AUTOMATION }}
     steps:
+      # The issue and its board item are written as the
+      # giantswarm-project-automation App, in giantswarm/giantswarm.
+      - name: Mint App token for the issue and the board
+        id: app-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ secrets.PROJECT_AUTOMATION_CLIENT_ID }}
+          private-key: ${{ secrets.PROJECT_AUTOMATION_PRIVATE_KEY }}
+          owner: giantswarm
+          repositories: giantswarm
+          permission-issues: write
+          permission-organization-projects: write
+
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -32,6 +43,7 @@ jobs:
       - name: Check for an existing issue
         id: existing
         env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
           BRANCH: ${{ github.ref_name }}
         run: |
           count=$(gh issue list -R "${ISSUE_REPO}" --state all \
@@ -42,6 +54,7 @@ jobs:
         id: issue
         if: steps.existing.outputs.count == '0'
         env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
           BRANCH: ${{ github.ref_name }}
           REPO: ${{ github.repository }}
         run: |
@@ -65,6 +78,7 @@ jobs:
       - name: Add issue to project board
         if: steps.existing.outputs.count == '0'
         env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
           ISSUE_URL: ${{ steps.issue.outputs.url }}
         run: |
           # look up the project and the field options by name
@@ -100,8 +114,30 @@ jobs:
             fi
           done
 
-          item_id=$(gh project item-add "${PROJECT_NUMBER}" --owner "${PROJECT_OWNER}" \
-            --url "${ISSUE_URL}" --format json --jq '.id')
+          # The board's built-in auto-add workflow (or the issue's own `on: issues`
+          # automation in ${ISSUE_REPO}) can add it first; then take its item.
+          if ! item_id=$(gh project item-add "${PROJECT_NUMBER}" --owner "${PROJECT_OWNER}" \
+            --url "${ISSUE_URL}" --format json --jq '.id' 2>add.err); then
+            if ! grep -q "already exists in this project" add.err; then
+              cat add.err >&2
+              exit 1
+            fi
+            item_id=""
+            for _ in 1 2 3 4 5; do
+              sleep 2
+              item_id=$(gh api graphql -f url="${ISSUE_URL}" -f query='
+                query($url: URI!) {
+                  resource(url: $url) {
+                    ... on Issue { projectItems(first: 20) { nodes { id project { id } } } }
+                  }
+                }' --jq ".data.resource.projectItems.nodes[] | select(.project.id == \"${project_id}\") | .id") || item_id=""
+              [ -n "${item_id}" ] && break
+            done
+            if [ -z "${item_id}" ]; then
+              echo "The issue is on the board, but its item was not found." >&2
+              exit 1
+            fi
+          fi
 
           set_value() {
             gh project item-edit --id "${item_id}" --project-id "${project_id}" \
