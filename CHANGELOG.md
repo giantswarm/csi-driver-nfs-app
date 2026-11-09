@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Update upstream csi-driver-nfs chart to v4.13.6.
 - Update architect to v10.17.4 (giantswarm/csi-driver-nfs-app#92)
+- Update mikefarah/yq to v4.54.3 (giantswarm/csi-driver-nfs-app#93)
 
 ### Added
 
