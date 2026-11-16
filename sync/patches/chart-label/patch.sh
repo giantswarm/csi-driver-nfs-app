@@ -7,8 +7,6 @@ set -o pipefail
 SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd ) ; readonly SCRIPT_DIR
 source "${SCRIPT_DIR}"/../../_helpers.sh
 
-cd "${REPO_DIR}"
-
 HELPERS_FILE="${CHART_DIR}/templates/_helpers.tpl"
 
 # The upstream helm.sh/chart helper cuts "<name>-<version>" at 63 characters and trims one "-". A long
