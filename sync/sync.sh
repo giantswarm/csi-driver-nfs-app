@@ -4,8 +4,18 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd ) ; readonly dir
-cd "${dir}/.."
+SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd ) ; readonly SCRIPT_DIR
+cd "${SCRIPT_DIR}/.."
+source "${SCRIPT_DIR}"/_helpers.sh
+
+# Test if required tooling is installed.
+PROGRAMS=("yq" "jq" "vendir")
+for program in "${PROGRAMS[@]}"; do
+    if ! command -v "${program}" &> /dev/null; then
+        echo "${program} not installed; aborting."
+        exit 1
+    fi
+done
 
 # Stage 1 sync - intermediate to the ./vendir folder
 set -x
@@ -19,10 +29,3 @@ helm dependency update helm/csi-driver-nfs/
 ./sync/patches/helpers/patch.sh
 ./sync/patches/crd-csi-snapshot/patch.sh
 ./sync/patches/chart-label/patch.sh
-
-# generate schema
-echo "Generating values schema..."
-{ set +x; } 2>/dev/null
-helm plugin install https://github.com/losisin/helm-values-schema-json.git --verify=false || true
-helm schema -f helm/csi-driver-nfs/values.yaml -o helm/csi-driver-nfs/values.schema.json
-echo "✓ Schema generated successfully"
